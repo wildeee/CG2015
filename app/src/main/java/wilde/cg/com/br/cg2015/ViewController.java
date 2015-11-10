@@ -27,13 +27,13 @@ public class ViewController extends View implements Runnable {
     @Override
     public void run() {
         while (true){
+            this.postInvalidate();
             try {
                 this.update();
-                postInvalidate();
                 Thread.sleep(50);
             }
             catch (Exception ex){
-                Log.d(TAG, "Erro no Loop do jogo.");
+                Log.d(TAG, "Erro no Loop do app.");
             }
         }
     }
@@ -42,6 +42,7 @@ public class ViewController extends View implements Runnable {
         i++;
     }
 
+    @Override
     protected void onDraw(Canvas canvas){
         canvas.drawText("Valor do i: " + i, 50, 100, paint);
     }
