@@ -8,7 +8,7 @@ public class PixelMail {
 
     private static final int rowCount = 10;
     private static final int colCount = 6;
-    private static final int distance = 70;
+    private static final int distance = 68;
 
     public PixelMail() {
         pixels = new Pixel[rowCount][colCount];

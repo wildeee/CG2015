@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class Pixel extends DrawableObject {
+public class Pixel extends ViewObject {
 
     private Rect body;
     private Paint paint;
@@ -16,10 +16,6 @@ public class Pixel extends DrawableObject {
         paint = new Paint();
         paint.setColor(Color.BLACK);
         updateDistortion();
-    }
-
-    @Override
-    public void update() {
     }
 
     @Override
@@ -35,6 +31,6 @@ public class Pixel extends DrawableObject {
     public void updateDistortion() {
         super.updateDistortion();
         super.setX((int) (super.getX() * Config.HORIZONTAL_DISTORTION));
-        super.setY((int)(super.getY() * Config.VERTICAL_DISTORTION));
+        super.setY((int) (super.getY() * Config.VERTICAL_DISTORTION));
     }
 }
