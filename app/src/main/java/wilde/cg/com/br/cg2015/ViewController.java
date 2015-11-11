@@ -10,8 +10,8 @@ import android.view.View;
 public class ViewController extends View implements Runnable {
 
     private static final String TAG = "ViewController";
-    private int i;
-    private Paint paint;
+
+    private PixelMail pixels;
 
     public ViewController(Context context) {
         super(context);
@@ -19,9 +19,7 @@ public class ViewController extends View implements Runnable {
     }
 
     private void init() {
-        this.i = 0;
-        paint = new Paint();
-        paint.setColor(Color.BLACK);
+        pixels = new PixelMail();
     }
 
     @Override
@@ -39,11 +37,10 @@ public class ViewController extends View implements Runnable {
     }
 
     public void update(){
-        i++;
     }
 
     @Override
     protected void onDraw(Canvas canvas){
-        canvas.drawText("Valor do i: " + i, 50, 100, paint);
+        pixels.draw(canvas);
     }
 }
