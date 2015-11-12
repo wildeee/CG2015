@@ -2,9 +2,8 @@ package wilde.cg.com.br.cg2015;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class ViewController extends View implements Runnable {
@@ -20,6 +19,17 @@ public class ViewController extends View implements Runnable {
 
     private void init() {
         pixels = new PixelMail();
+
+        this.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println("X: " + event.getX());
+                System.out.println("Y: " + event.getY());
+                System.out.println();
+                return false;
+            }
+        });
+
     }
 
     @Override

@@ -4,14 +4,12 @@ import android.graphics.Canvas;
 
 public abstract class ViewObject {
 
-    private int x;
-    private int y;
+    private final Point point;
     private int width;
     private int height;
 
-    public ViewObject(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
+    public ViewObject(Point point, int width, int height) {
+        this.point = point;
         this.width = width;
         this.height = height;
     }
@@ -23,20 +21,8 @@ public abstract class ViewObject {
         this.height = (int) (this.height * Config.VERTICAL_DISTORTION);
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public Point getPoint() {
+        return point;
     }
 
     public int getWidth() {

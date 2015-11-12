@@ -10,8 +10,8 @@ public class Pixel extends ViewObject {
     private Rect body;
     private Paint paint;
 
-    public Pixel(int x, int y) {
-        super(x, y, 10, 10);
+    public Pixel(Point point) {
+        super(point, 10, 10);
         body = new Rect();
         paint = new Paint();
         paint.setColor(Color.BLACK);
@@ -21,16 +21,16 @@ public class Pixel extends ViewObject {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawRect(body, paint);
-        body.top = super.getY();
-        body.bottom = super.getY() + super.getHeight();
-        body.left = super.getX();
-        body.right = super.getX() + super.getWidth();
+        body.top = super.getPoint().getY();
+        body.bottom = super.getPoint().getY() + super.getHeight();
+        body.left = super.getPoint().getX();
+        body.right = super.getPoint().getX() + super.getWidth();
     }
 
     @Override
     public void updateDistortion() {
         super.updateDistortion();
-        super.setX((int) (super.getX() * Config.HORIZONTAL_DISTORTION));
-        super.setY((int) (super.getY() * Config.VERTICAL_DISTORTION));
+        super.getPoint().setX((int) (super.getPoint().getX() * Config.HORIZONTAL_DISTORTION));
+        super.getPoint().setY((int) (super.getPoint().getY() * Config.VERTICAL_DISTORTION));
     }
 }
