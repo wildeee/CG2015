@@ -1,5 +1,7 @@
 package wilde.cg.com.br.cg2015;
 
+import static java.lang.Math.*;
+
 public class Point {
 
     private int x;
@@ -26,7 +28,7 @@ public class Point {
         this.y = y;
     }
 
-    public int getDistance(Point p){ // Testar essa bexiga
-        return (int) Math.sqrt(Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2));
+    public double getDistance(Point p){
+        return sqrt(pow(this.x - p.x, 2) + pow(this.y - p.y, 2));
     }
 }

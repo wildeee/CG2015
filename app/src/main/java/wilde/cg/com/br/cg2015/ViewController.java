@@ -12,6 +12,12 @@ public class ViewController extends View implements Runnable {
 
     private PixelMail pixels;
 
+    private int selectedPixelsAmount;
+    private Pixel start;
+    private Pixel target;
+
+    private Bresenham bresenham;
+
     public ViewController(Context context) {
         super(context);
         init();
@@ -19,13 +25,27 @@ public class ViewController extends View implements Runnable {
 
     private void init() {
         pixels = new PixelMail();
+        selectedPixelsAmount = 0;
 
         this.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                System.out.println("X: " + event.getX());
-                System.out.println("Y: " + event.getY());
-                System.out.println();
+
+                Pixel clicked = pixels.getNearestPixel((int) event.getX(), (int) event.getY()); // Ainda é necessário verificar se os pixels clicados não são iguais. Após isso, desenhar a reta entre pixels, e partir para a implementação do Bresenham.
+
+                if (selectedPixelsAmount == 1) {
+                    target = clicked;
+                    target.setSelected(true);
+                    selectedPixelsAmount++;
+
+                    bresenham = new Bresenham(start, target, pixels);
+                }
+
+                if (selectedPixelsAmount == 0) {
+                    start = clicked;
+                    start.setSelected(true);
+                    selectedPixelsAmount++;
+                }
                 return false;
             }
         });

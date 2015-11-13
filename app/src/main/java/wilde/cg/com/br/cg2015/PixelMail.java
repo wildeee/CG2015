@@ -27,4 +27,22 @@ public class PixelMail {
             }
         }
     }
+
+    public Pixel getNearestPixel(int x, int y){
+        Pixel nearest = pixels[0][0];
+        Point clicked = new Point(x, y);
+        double nearestDistance = nearest.getPoint().getDistance(clicked);
+        double distance;
+
+        for (Pixel[] pixelArray : pixels) {
+            for (Pixel pixel : pixelArray) {
+                distance = clicked.getDistance(pixel.getPoint());
+                if (distance < nearestDistance){
+                    nearest = pixel;
+                    nearestDistance = distance;
+                }
+            }
+        }
+        return nearest;
+    }
 }

@@ -9,9 +9,11 @@ public class Pixel extends ViewObject {
 
     private Rect body;
     private Paint paint;
+    private boolean selected;
 
     public Pixel(Point point) {
         super(point, 10, 10);
+        selected = false;
         body = new Rect();
         paint = new Paint();
         paint.setColor(Color.BLACK);
@@ -32,5 +34,14 @@ public class Pixel extends ViewObject {
         super.updateDistortion();
         super.getPoint().setX((int) (super.getPoint().getX() * Config.HORIZONTAL_DISTORTION));
         super.getPoint().setY((int) (super.getPoint().getY() * Config.VERTICAL_DISTORTION));
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        paint.setColor(selected ? Color.RED : Color.BLACK);
+        this.selected = selected;
     }
 }
