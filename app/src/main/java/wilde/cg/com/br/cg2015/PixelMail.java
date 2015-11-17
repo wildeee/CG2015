@@ -45,4 +45,8 @@ public class PixelMail {
         }
         return nearest;
     }
+
+    public Pixel getAt(int x, int y){
+        return pixels[x][y];
+    }
 }

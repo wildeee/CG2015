@@ -72,5 +72,6 @@ public class ViewController extends View implements Runnable {
     @Override
     protected void onDraw(Canvas canvas){
         pixels.draw(canvas);
+//        new LineSegment(pixels.getAt(0, 0), pixels.getAt(2, 2)).draw(canvas);
     }
 }

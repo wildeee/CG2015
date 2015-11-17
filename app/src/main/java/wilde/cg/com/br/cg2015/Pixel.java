@@ -10,9 +10,10 @@ public class Pixel extends ViewObject {
     private Rect body;
     private Paint paint;
     private boolean selected;
+    public static final int SIZE = 10;
 
     public Pixel(Point point) {
-        super(point, 10, 10);
+        super(point, SIZE, SIZE);
         selected = false;
         body = new Rect();
         paint = new Paint();
