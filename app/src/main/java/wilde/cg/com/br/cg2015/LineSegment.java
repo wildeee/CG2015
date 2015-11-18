@@ -24,5 +24,6 @@ public class LineSegment {
                           end.getPoint().getY(),
                         paint
         );
+        end.setSelected(true);
     }
 }

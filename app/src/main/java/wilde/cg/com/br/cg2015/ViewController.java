@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.List;
+
 public class ViewController extends View implements Runnable {
 
     private static final String TAG = "ViewController";
@@ -15,6 +17,8 @@ public class ViewController extends View implements Runnable {
     private int selectedPixelsAmount;
     private Pixel start;
     private Pixel target;
+
+    private List<LineSegment> reta;
 
     private Bresenham bresenham;
 
@@ -39,6 +43,10 @@ public class ViewController extends View implements Runnable {
                     selectedPixelsAmount++;
 
                     bresenham = new Bresenham(start, target, pixels);
+                    reta = bresenham.buildPath();
+
+
+
                 }
 
                 if (selectedPixelsAmount == 0) {
@@ -72,6 +80,12 @@ public class ViewController extends View implements Runnable {
     @Override
     protected void onDraw(Canvas canvas){
         pixels.draw(canvas);
-//        new LineSegment(pixels.getAt(0, 0), pixels.getAt(2, 2)).draw(canvas);
+
+        if (reta != null){
+            for (LineSegment lineSegment : reta) {
+                lineSegment.draw(canvas);
+            }
+        }
     }
+
 }

@@ -25,8 +25,8 @@ public class Bresenham {
         this.target = target;  // x2 y2
         this.road = road;
 
-        this.distanceX = target.getPoint().getX() - start.getPoint().getX(); // dx = x2 - x1
-        this.distanceY = target.getPoint().getY() - start.getPoint().getY(); // dy = y2 - y1
+        this.distanceX = target.getVirtualPoint().getX() - start.getVirtualPoint().getX(); // dx = x2 - x1
+        this.distanceY = target.getVirtualPoint().getY() - start.getVirtualPoint().getY(); // dy = y2 - y1
 
         this.distance = 2 * distanceY - distanceX;                           // d = 2dy - dx
 
@@ -40,16 +40,21 @@ public class Bresenham {
 
     public List<LineSegment> buildPath(){
         List<LineSegment> path = new ArrayList<>();
-
-        while (lastSelected.getPoint().getX() < target.getPoint().getX()){ // "Repetir os passos seguintes enquanto x < x2"
+        Pixel nextPixel;
+        int incY;
+        while (lastSelected.getVirtualPoint().getX() < target.getVirtualPoint().getX()){ // "Repetir os passos seguintes enquanto x < x2"
+            incY = 0;
             if (distance <= 0){              // Se d <= 0,
                 distance += incrementE;         //  incrementar d de incE
             } else {                         // Caso contrário,
                 distance += incrementNE;        // Incrementar d de incNE
-                                                // e incrementar y de uma unidade
-
+                incY = 1;                    // e incrementar y de uma unidade
             }
-                                     // "Incrementar x de uma unidade e marcar o pixel com as coordenadas x e y"
+
+            nextPixel = road.getAt(lastSelected.getVirtualPoint().getX() + 1, lastSelected.getVirtualPoint().getY() + incY); // "Incrementar x de uma unidade
+
+            path.add(new LineSegment(lastSelected, nextPixel));                                                              // e marcar o pixel com as coordenadas x e y"
+            lastSelected = nextPixel;
         }
 
 

@@ -7,13 +7,15 @@ import android.graphics.Rect;
 
 public class Pixel extends ViewObject {
 
+    private final Point virtualPoint;
     private Rect body;
     private Paint paint;
     private boolean selected;
     public static final int SIZE = 10;
 
-    public Pixel(Point point) {
-        super(point, SIZE, SIZE);
+    public Pixel(Point realPoint, Point virtualPoint) {
+        super(realPoint, SIZE, SIZE);
+        this.virtualPoint = virtualPoint;
         selected = false;
         body = new Rect();
         paint = new Paint();
@@ -44,5 +46,9 @@ public class Pixel extends ViewObject {
     public void setSelected(boolean selected) {
         paint.setColor(selected ? Color.RED : Color.BLACK);
         this.selected = selected;
+    }
+
+    public Point getVirtualPoint() {
+        return virtualPoint;
     }
 }

@@ -15,7 +15,7 @@ public class PixelMail {
 
         for (int row = 0; row < rowCount; row++){
             for (int col = 0; col < colCount; col++){
-                pixels[row][col] = new Pixel(new Point((col + 1) * distance, (row + 1) * distance));
+                pixels[row][col] = new Pixel(new Point((col + 1) * distance, (row + 1) * distance), new Point(col, row));
             }
         }
     }
