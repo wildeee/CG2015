@@ -47,6 +47,6 @@ public class PixelMail {
     }
 
     public Pixel getAt(int x, int y){
-        return pixels[x][y];
+        return pixels[y][x];
     }
 }
