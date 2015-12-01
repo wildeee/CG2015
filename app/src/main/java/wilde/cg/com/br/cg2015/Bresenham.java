@@ -71,7 +71,7 @@ public class Bresenham {
         if (distanceX >= 0){
             if (distanceX >= Math.abs(distanceY)){
                 incX = 1;
-                erro = distanceY == 0 ? -1 : 0; // Não sei se isso é o certo a se fazer, mas deu certo.
+                erro = distanceY == 0 ? -1 : 0;
                 for (int i = 1 ; i < Math.abs(distanceX) ; i++){ // for 1
                     if (erro < 0){
                         incY = 0;
@@ -102,7 +102,7 @@ public class Bresenham {
         } else {
             if (Math.abs(distanceX) >= distanceY){
                 incX = -1;
-                erro = distanceY == 0 ? -1 : 0; // Não sei se isso é o certo a se fazer, mas deu certo.
+                erro = distanceY == 0 ? -1 : 0;
                 for (int i = 1 ; i < Math.abs(distanceX); i++){ // for 3
                     if (erro < 0){
                         incY = 0;

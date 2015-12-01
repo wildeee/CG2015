@@ -44,9 +44,6 @@ public class ViewController extends View implements Runnable {
 
                     bresenham = new Bresenham(start, target, pixels);
                     reta = bresenham.buildPath();
-
-
-
                 }
 
                 if (selectedPixelsAmount == 0) {

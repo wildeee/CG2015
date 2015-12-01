@@ -18,10 +18,10 @@ public class LineSegment {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawLine(begin.getPoint().getX(),
-                        begin.getPoint().getY(),
-                          end.getPoint().getX(),
-                          end.getPoint().getY(),
+        canvas.drawLine(begin.getPoint().getX() + 5,
+                        begin.getPoint().getY() + 5,
+                          end.getPoint().getX() + 5,
+                          end.getPoint().getY() + 5,
                         paint
         );
         end.setSelected(true);
