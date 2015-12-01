@@ -21,7 +21,7 @@ public class Bresenham {
     private int incrementNE;
 
     public Bresenham(Pixel start, Pixel target, PixelMail road) {
-        this.start = start;    // x1 y1
+        this.start = start;
         this.target = target;  // x2 y2
         this.road = road;
 
@@ -41,98 +41,97 @@ public class Bresenham {
     public List<LineSegment> buildPath(){
         List<LineSegment> path = new ArrayList<>();
         Pixel nextPixel;
-        int incY;
-        while (lastSelected.getVirtualPoint().getX() < target.getVirtualPoint().getX()){ // "Repetir os passos seguintes enquanto x < x2"
-            incY = 0;
-            if (distance <= 0){              // Se d <= 0,
-                distance += incrementE;         //  incrementar d de incE
-            } else {                         // Caso contrário,
-                distance += incrementNE;        // Incrementar d de incNE
-                incY = 1;                    // e incrementar y de uma unidade
-            }
+        int incX = 0;
+        int incY = 0;
+        int erro = 0;
+        boolean inverteu = false;
+//        while (lastSelected.getVirtualPoint().getX() < target.getVirtualPoint().getX()){ // "Repetir os passos seguintes enquanto x < x2"
+//            incY = 0;
+//            if (distance <= 0){              // Se d <= 0,
+//                distance += incrementE;         //  incrementar d de incE
+//            } else {                         // Caso contrário,
+//                distance += incrementNE;        // Incrementar d de incNE
+//                incY = 1;                    // e incrementar y de uma unidade
+//            }
+//
+//            nextPixel = road.getAt(lastSelected.getVirtualPoint().getX() + 1, lastSelected.getVirtualPoint().getY() + incY); // "Incrementar x de uma unidade
+//
+//            path.add(new LineSegment(lastSelected, nextPixel));                                                              // e marcar o pixel com as coordenadas x e y"
+//            lastSelected = nextPixel;
+//        }
 
-            nextPixel = road.getAt(lastSelected.getVirtualPoint().getX() + 1, lastSelected.getVirtualPoint().getY() + incY); // "Incrementar x de uma unidade
-
-            path.add(new LineSegment(lastSelected, nextPixel));                                                              // e marcar o pixel com as coordenadas x e y"
-            lastSelected = nextPixel;
+        if (distanceY >= distanceX && start.getVirtualPoint().getY() > target.getVirtualPoint().getY() ||
+           (distanceY < distanceX  && distanceY < 0)){
+            inverteu = true;
+            lastSelected = target;
+            distanceX = start.getVirtualPoint().getX() - target.getVirtualPoint().getX();
+            distanceY = start.getVirtualPoint().getY() - target.getVirtualPoint().getY();
         }
 
-
+        if (distanceX >= 0){
+            if (distanceX >= distanceY){
+                incX = 1;
+                for (int i = 1 ; i < Math.abs(distanceX) ; i++){ // for 1
+                    if (erro < 0){
+                        incY = 0;
+                        erro += distanceY;
+                    } else {
+                        incY = 1;
+                        erro += distanceY - distanceX;
+                    }
+                    nextPixel = road.getAt(lastSelected.getVirtualPoint().getX()+ incX, lastSelected.getVirtualPoint().getY() + incY);
+                    path.add(new LineSegment(lastSelected, nextPixel));
+                    lastSelected = nextPixel;
+                }
+            } else {
+                incY = 1;
+                for (int i = 1 ; i < Math.abs(distanceY) ; i++){ // for 2
+                    if (erro < 0){
+                        incX = 1;
+                        erro += distanceY - distanceX;
+                    } else {
+                        incX = 0;
+                        erro -= distanceX;
+                    }
+                    nextPixel = road.getAt(lastSelected.getVirtualPoint().getX()+ incX, lastSelected.getVirtualPoint().getY() + incY);
+                    path.add(new LineSegment(lastSelected, nextPixel));
+                    lastSelected = nextPixel;
+                }
+            }
+        } else {
+            if (distanceX >= distanceY){
+                incX = -1;
+                for (int i = 1 ; i < Math.abs(distanceX); i++){ // for 3
+                    if (erro < 0){
+                        incY = 0;
+                        erro += distanceY;
+                    } else {
+                        incY = 1;
+                        erro += distanceY + distanceX;
+                    }
+                    nextPixel = road.getAt(lastSelected.getVirtualPoint().getX()+ incX, lastSelected.getVirtualPoint().getY() + incY);
+                    path.add(new LineSegment(lastSelected, nextPixel));
+                    lastSelected = nextPixel;
+                }
+            } else {
+                incY = 1;
+                for (int i = 1 ; i < Math.abs(distanceY) ; i++){ // for 4
+                    if (erro < 0){
+                        incX = -1;
+                        erro += distanceY + distanceX;
+                    } else {
+                        incX = 0;
+                        erro += distanceX;
+                    }
+                    nextPixel = road.getAt(lastSelected.getVirtualPoint().getX()+ incX, lastSelected.getVirtualPoint().getY() + incY);
+                    path.add(new LineSegment(lastSelected, nextPixel));
+                    lastSelected = nextPixel;
+                }
+            }
+        }
+        path.add(new LineSegment(lastSelected, inverteu ? start : target));
         return path;
     }
 
-//        int x, y, erro, deltaX, deltaY;
-//        erro = 0;
-//        x = p1.x;
-//        y = p1.y;
-//        deltaX = p2.x - p1.x;
-//        deltaY = p2.y - p1.y;
-//
-//        if((Math.abs(deltaY)>=Math.abs(deltaX) && p1.y>p2.y)
-//                ||(Math.abs(deltaY)<Math.abs(deltaX) && deltaY<0)){
-//
-//            x = p2.x;
-//            y = p2.y;
-//            deltaX = p1.x-p2.x;
-//            deltaY = p1.y-p2.y;
-//        }
-//        p1.draw(g);
-//        if(deltaX>=0){
-//            if(Math.abs(deltaX)>=Math.abs(deltaY)){
-//                for(int i=1;i<Math.abs(deltaX);i++){
-//                    if(erro<0){
-//                        x++;
-//                        new Ponto(x,y).draw(g);
-//                        erro += deltaY;
-//                    }else{
-//                        x++;
-//                        y++;
-//                        new Ponto(x,y).draw(g);
-//                        erro += deltaY - deltaX;
-//                    }
-//                }
-//            }else{
-//                for(int i=1;i<Math.abs(deltaY);i++){
-//                    if(erro<0){
-//                        x++;
-//                        y++;
-//                        new Ponto(x,y).draw(g);
-//                        erro += deltaY - deltaX;
-//                    }else{
-//                        y++;
-//                        new Ponto(x,y).draw(g);
-//                        erro -= deltaX;
-//                    }
-//                }
-//            }
-//        }else{ // deltaX=Math.abs(deltaY)){
-//            for(int i=1;i<Math.abs(deltaX);i++){
-//                if(erro<0){
-//                    x--;
-//                    new Ponto(x,y).draw(g);
-//                    erro += deltaY;
-//                }else{
-//                    x--;
-//                    y++;
-//                    new Ponto(x,y).draw(g);
-//                    erro += deltaY + deltaX;
-//                }
-//            }
-//        }else{
-//            for(int i=1;i<Math.abs(deltaY);i++){
-//                if(erro<0){
-//                    x--;
-//                    y++;
-//                    new Ponto(x,y).draw(g);
-//                    erro += deltaY + deltaX;
-//                }else{
-//                    y++;
-//                    new Ponto(x,y).draw(g);
-//                    erro += deltaX;
-//                }
-//            }
-//        }
-//    }
-//    p2.draw(g);
-//}
+
 }
