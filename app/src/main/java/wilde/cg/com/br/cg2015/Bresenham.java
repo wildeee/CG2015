@@ -60,8 +60,8 @@ public class Bresenham {
 //            lastSelected = nextPixel;
 //        }
 
-        if (distanceY >= distanceX && start.getVirtualPoint().getY() > target.getVirtualPoint().getY() ||
-           (distanceY < distanceX  && distanceY < 0)){
+        if (Math.abs(distanceY) >= Math.abs(distanceX) && start.getVirtualPoint().getY() > target.getVirtualPoint().getY() ||
+           (Math.abs(distanceY) < Math.abs(distanceX)  && distanceY < 0)){
             inverteu = true;
             lastSelected = target;
             distanceX = start.getVirtualPoint().getX() - target.getVirtualPoint().getX();
@@ -69,8 +69,9 @@ public class Bresenham {
         }
 
         if (distanceX >= 0){
-            if (distanceX >= distanceY){
+            if (distanceX >= Math.abs(distanceY)){
                 incX = 1;
+                erro = distanceY == 0 ? -1 : 0; // Não sei se isso é o certo a se fazer, mas deu certo.
                 for (int i = 1 ; i < Math.abs(distanceX) ; i++){ // for 1
                     if (erro < 0){
                         incY = 0;
@@ -99,8 +100,9 @@ public class Bresenham {
                 }
             }
         } else {
-            if (distanceX >= distanceY){
+            if (Math.abs(distanceX) >= distanceY){
                 incX = -1;
+                erro = distanceY == 0 ? -1 : 0; // Não sei se isso é o certo a se fazer, mas deu certo.
                 for (int i = 1 ; i < Math.abs(distanceX); i++){ // for 3
                     if (erro < 0){
                         incY = 0;
