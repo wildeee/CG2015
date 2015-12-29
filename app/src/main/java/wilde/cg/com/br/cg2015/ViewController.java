@@ -2,6 +2,9 @@ package wilde.cg.com.br.cg2015;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,20 +25,39 @@ public class ViewController extends View implements Runnable {
 
     private Bresenham bresenham;
 
+    private MyButton btn;
+
     public ViewController(Context context) {
         super(context);
         init();
     }
 
-    private void init() {
+    private boolean checkResetButton(int x, int y){
+        return
+                x >= btn.getLeft() && x <= btn.getRight()
+             && y >= btn.getTop() && y <= btn.getBottom();
+    }
+
+    public void init() {
         pixels = new PixelMail();
         selectedPixelsAmount = 0;
+
+        btn = new MyButton(10, 10, 80, 40);
+
 
         this.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                int x = (int) event.getX();
+                int y = (int) event.getY();
 
-                Pixel clicked = pixels.getNearestPixel((int) event.getX(), (int) event.getY()); // Ainda é necessário verificar se os pixels clicados não são iguais. Após isso, desenhar a reta entre pixels, e partir para a implementação do Bresenham.
+                if (checkResetButton(x, y)) {
+                    reta = null;
+                    ViewController.this.init();
+                    return false;
+                }
+
+                Pixel clicked = pixels.getNearestPixel(x, y);
 
                 if (selectedPixelsAmount == 1) {
                     target = clicked;
@@ -77,6 +99,7 @@ public class ViewController extends View implements Runnable {
     @Override
     protected void onDraw(Canvas canvas){
         pixels.draw(canvas);
+        btn.draw(canvas);
 
         if (reta != null){
             for (LineSegment lineSegment : reta) {
